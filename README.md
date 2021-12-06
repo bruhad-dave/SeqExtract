@@ -5,7 +5,7 @@ Currently requires that the user download FASTA files of interest (reference gen
 ## TODO
 * Check that all issues are raised and resolved as expected
 * Interface directly with web databases
-  * for NCBI databases, add option "-remote" to blast command; then clean up data
+  * for NCBI databases, add option ```"-remote"``` to blast command; then clean up data
   * for others?
 * Create a simple installer.sh to install BLAST, samtools, PySimpleGUI (if and as required)
 
