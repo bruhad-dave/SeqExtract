@@ -1,5 +1,5 @@
 # SeqExtract -- In Progress ! ! !
-Given a set of query sequences in FASTA format, BLAST for matches and extract matched sequences from target database using samtools\n
+Given a set of query sequences in FASTA format, BLAST for matches and extract matched sequences from target database using samtools"\n"
 Currently requires that the user download FASTA files of interest (reference genomes, etc) to their computer
 
 ## TODO
