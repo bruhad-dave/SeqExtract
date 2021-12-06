@@ -5,7 +5,7 @@ Currently requires that the user download FASTA files of interest (reference gen
 ## TODO
 * Check that all issues are raised and resolved as expected
 * Interface directly with web databases
-  * for NCBI databases, add option ```"-remote"``` to blast command; then clean up data
+  * for NCBI databases, add option ```-remote``` to blast command; then clean up data
   * for others?
 * Create a simple installer.sh to install BLAST, samtools, PySimpleGUI (if and as required)
 
@@ -43,7 +43,7 @@ $ bash ./SE_cli.sh -o path/to/output/dir -r path/to/database/dir -i path/to/quer
 
 ```
 
-# Pseudocode: "SE_cli.sh"
+# Pseudocode: ```SE_cli.sh```
 ```
 count number of options at launch
  if number of options == 0:
@@ -58,11 +58,11 @@ else:
   if correct number:
     collect inputs
     check inputs for issues and attempt to resolve
-    pass inputs to "params.txt"
+    pass inputs to params.txt
   else:
     print help and quit
 ```
-# Pseudocode: "SE_gui.py"
+# Pseudocode: ```SE_gui.py```
 ```
 * import PySimpleGUI
 
@@ -71,9 +71,9 @@ check inputs for issues
 if issues:
   raise exceptions and attempt to resolve (with gui prompts)
 
-pass inputs to "params.txt"
+pass inputs to params.txt
 ```
-# Pseudocode: "SE_wrapper.sh"
+# Pseudocode: ```SE_wrapper.sh```
 ```
 * source params.txt
 clean up params.txt and move it to designated output path
