@@ -44,7 +44,7 @@ def check_outpath_contents(folder):
 	if len(os.listdir(out_path)) == 0:
 		return out_path
 	else:
-		sg.popup_timed("The output path you have selected is not empty. A new directory with the nomenclature SeqExtract_Output.datetime(hhmm) will be created. This window will close automatically.", auto_close_duration=10)
+		sg.popup_timed("The output path you have selected is not empty. A new directory with the nomenclature SeqExtract_Output.datetime(hhmm) will be created. This window will close automatically.", title="Heads up!", auto_close_duration=5)
 		os.chdir(out_path)
 		now = dt.now().strftime("%H%M")
 		os.mkdir(f"SeqExtract_Output.{now}")

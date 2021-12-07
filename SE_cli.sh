@@ -23,13 +23,14 @@ function error_check_runtype {
     fi
 }
 
-
 function exception_outpath_occupied {
     contents=`ls $1 | wc -l`
     if [[ $contents -gt 0 ]]
     then
-        echo "Specified output directory is not empty. A new directory - SeqExtract_Output.`date +%H.%M` - will be created in $1"
-        cd $1 && mkdir ./SeqExtract_Output.`date +%H.%M`
+        #echo "Specified output directory is not empty. A new directory - SeqExtract_Output.`date +%H.%M` - will be created in $1"
+        out="SeqExtract_Output.`date +%H.%M`"
+        cd $1 && mkdir $out
+        cd $out && echo `pwd`
     else
         echo $1
     fi
@@ -40,7 +41,7 @@ function exception_no_target_fasta {
     if [[ $num_fasta -gt 0 ]]; then
         echo $1
     else
-        read -p "The database/target folder you have selected does not seem to contain any fasta files. Please enter another path. " new_refs_path
+        read -p " ! ! ! The database/target folder you have selected does not seem to contain any fasta files. Please enter another path. " new_refs_path
         new_num_fasta=`ls $new_refs_path/*.{fa,fasta} 2> /dev/null | wc -l`
         if [[ $new_num_fasta -gt 0 ]]; then
             echo $new_refs_path
@@ -54,7 +55,7 @@ function exception_query_not_fasta {
     if [[ ( $query_path == *.fa ) || ( $query_path == *.fasta ) ]]; then
         echo $query_path
     else
-        read -p "Specified query file does not seem to be a fasta file. Please pick again. " newpath
+        read -p " ! ! ! Specified query file does not seem to be a fasta file. Please pick again. " newpath
         if [[ ( $newpath == *.fa ) || ( $newpath == *.fasta ) ]]; then
         	echo $newpath
         else
@@ -64,11 +65,12 @@ function exception_query_not_fasta {
 }
 
 function check_valid_moltype {
-    if [[ ( $1 == "nucl" ) || ( $1 == "prot" ) ]]; then
-        echo $1
+    n=`echo $1 | tr '[A-Z]' '[a-z]'`
+    if [[ ( $n == "nucl" ) || ( $n == "prot" ) ]]; then
+        echo $n
     else
-        echo "Invalid molecule type for $2. Please pick either nucl or prot."
-        read new_moltype
+        read -p " ! ! ! Invalid molecule type for $2. Please pick either nucl or prot: " new_moltype
+        #read new_moltype
         if [[ ( $new_moltype == "nucl" ) || ( $new_moltype == "prot" ) ]]; then
             echo $new_moltype
         else
@@ -117,15 +119,15 @@ case $runtype in
         #source params.txt
         #mv ./params.txt $outdir
         # run main
-        `which bash` $scripts/SeqExtract_main.sh
+        `which bash` $scripts/SE_wrapper.sh
         ;;
     "CLI")
         # handle exceptions
         outdir=`exception_outpath_occupied $outpath`
         refs_path=`exception_no_target_fasta $refs_path`
         query_path=`exception_query_not_fasta $query_path`
-        query_type=`check_valid_moltype $query_type`
-        database_type=`check_valid_moltype $database_type`
+        query_type=`check_valid_moltype $query_type "query"`
+        database_type=`check_valid_moltype $database_type "target"`
         blast_type=`pick_blast_type $query_type $database_type`
         num_refs=`count_targets $refs_path`
 
@@ -141,6 +143,6 @@ case $runtype in
         num_refs=$num_refs" > params.txt
 
         # run main
-        `which bash` $scripts/SeqExtract_main.sh
+        `which bash` $scripts/SE_wrapper.sh
         ;;
 esac

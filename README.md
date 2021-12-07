@@ -3,7 +3,9 @@ Given a set of query sequences in FASTA format, BLAST for matches and extract ma
 Currently requires that the user download FASTA files of interest (reference genomes, etc) to their computer.
 
 ## TODO
-* Check that all issues are raised and resolved as expected
+* Check that all issues are raised and resolved as expected ##DONE
+  * checked for CLI mode
+  * checked for GUI mode  
 * Interface directly with web databases
   * for NCBI databases, add option ```-remote``` to blast command; then clean up data
   * for others?
